@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Admissions at Horizon International School — begin your child's journey with us."
+    >
+
+    <title>Admissions | Horizon International School</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site-header">
+
+    <a href="index.html" class="school-logo">
+
+        <span class="logo-main">
+            HORIZON
+        </span>
+
+        <span class="logo-sub">
+            INTERNATIONAL SCHOOL
+        </span>
+
+    </a>
+
+
+    <nav class="desktop-nav">
+
+        <a href="index.html#philosophy">
+            About
+        </a>
+
+        <a href="index.html#learning">
+            Learning
+        </a>
+
+        <a href="index.html#campus">
+            Campus
+        </a>
+
+        <a href="admission.html">
+            Admissions
+        </a>
+
+    </nav>
+
+
+    <a
+        href="admission.html"
+        class="header-admission"
+    >
+        Apply Now
+    </a>
+
+
+    <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+    >
+        <span></span>
+        <span></span>
+    </button>
+
+</header>
+
+
+
+<!-- =========================
+     MOBILE MENU
+========================= -->
+
+<div class="mobile-menu">
+
+    <button
+        class="mobile-menu-close"
+        type="button"
+        aria-label="Close navigation menu"
+    >
+        ×
+    </button>
+
+    <nav>
+
+        <a href="index.html#philosophy">
+            About
+        </a>
+
+        <a href="index.html#learning">
+            Learning
+        </a>
+
+        <a href="index.html#campus">
+            Campus
+        </a>
+
+        <a href="admission.html">
+            Admissions
+        </a>
+
+    </nav>
+
+</div>
+
+
+
+<!-- =========================
+     ADMISSION HERO
+========================= -->
+
+<main>
+
+<section class="admission-hero">
+
+    <div class="admission-hero-content">
+
+        <span class="section-eyebrow">
+            ADMISSIONS
+        </span>
+
+
+        <h1>
+            Begin Your
+            <span>Journey.</span>
+        </h1>
+
+
+        <p>
+            Every great journey begins with a first step.
+            Tell us about your child and take the first step
+            toward becoming part of the Horizon community.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ADMISSIONS SNAPSHOT
+========================= -->
+
+<section class="admission-snapshot">
+
+    <div class="snapshot-item">
+
+        <span class="snapshot-number">01</span>
+
+        <div>
+            <h3>Explore</h3>
+            <p>
+                Discover our approach to learning,
+                campus life and student development.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="snapshot-item">
+
+        <span class="snapshot-number">02</span>
+
+        <div>
+            <h3>Apply</h3>
+            <p>
+                Complete the application and
+                tell us about your child.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="snapshot-item">
+
+        <span class="snapshot-number">03</span>
+
+        <div>
+            <h3>Connect</h3>
+            <p>
+                Our admissions team will contact
+                you about the next steps.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     APPLICATION
+========================= -->
+
+<section class="admission-section">
+
+    <div class="admission-container">
+
+
+        <!-- INTRO -->
+
+        <div class="admission-intro">
+
+            <span class="section-eyebrow">
+                APPLICATION
+            </span>
+
+
+            <h2>
+                We're looking forward
+                <span>to meeting you.</span>
+            </h2>
+
+
+            <p>
+                Complete the application below and our
+                admissions team will review your information.
+                We'll contact you shortly with the next steps.
+            </p>
+
+
+            <div class="admission-note">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    Please make sure the information provided
+                    is accurate before submitting your application.
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FORM -->
+
+        <form
+            id="admissionForm"
+            class="admission-form"
+        >
+
+
+            <!-- =========================
+                 01 STUDENT
+            ========================== -->
+
+            <div class="form-heading">
+
+                <span>
+                    01
+                </span>
+
+                <div>
+
+                    <h3>
+                        Student Information
+                    </h3>
+
+                    <p>
+                        Tell us about the student applying.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="studentName">
+                        Student Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentName"
+                        name="studentName"
+                        placeholder="Enter student's full name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="dateOfBirth">
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateOfBirth"
+                        name="dateOfBirth"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="grade">
+                        Applying For
+                    </label>
+
+                    <select
+                        id="grade"
+                        name="grade"
+                        required
+                    >
+
+                        <option value="">
+                            Select grade
+                        </option>
+
+                        <option value="Early Years">
+                            Early Years
+                        </option>
+
+                        <option value="Kindergarten">
+                            Kindergarten
+                        </option>
+
+                        <option value="Grade 1">
+                            Grade 1
+                        </option>
+
+                        <option value="Grade 2">
+                            Grade 2
+                        </option>
+
+                        <option value="Grade 3">
+                            Grade 3
+                        </option>
+
+                        <option value="Grade 4">
+                            Grade 4
+                        </option>
+
+                        <option value="Grade 5">
+                            Grade 5
+                        </option>
+
+                        <option value="Grade 6">
+                            Grade 6
+                        </option>
+
+                        <option value="Grade 7">
+                            Grade 7
+                        </option>
+
+                        <option value="Grade 8">
+                            Grade 8
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="currentSchool">
+                        Current School
+                    </label>
+
+                    <input
+                        type="text"
+                        id="currentSchool"
+                        name="currentSchool"
+                        placeholder="Current school name"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 02 PARENT
+            ========================== -->
+
+            <div class="form-heading">
+
+                <span>
+                    02
+                </span>
+
+                <div>
+
+                    <h3>
+                        Parent / Guardian
+                    </h3>
+
+                    <p>
+                        How can we reach you?
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="parentName">
+                        Parent / Guardian Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="parentName"
+                        name="parentName"
+                        placeholder="Enter full name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="relationship">
+                        Relationship
+                    </label>
+
+                    <select
+                        id="relationship"
+                        name="relationship"
+                        required
+                    >
+
+                        <option value="">
+                            Select relationship
+                        </option>
+
+                        <option value="Parent">
+                            Parent
+                        </option>
+
+                        <option value="Guardian">
+                            Guardian
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="+1 (000) 000-0000"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 03 ADDITIONAL
+            ========================== -->
+
+            <div class="form-heading">
+
+                <span>
+                    03
+                </span>
+
+                <div>
+
+                    <h3>
+                        Additional Information
+                    </h3>
+
+                    <p>
+                        Anything else you'd like us to know?
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group full-width">
+
+                <label for="message">
+                    Message
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    placeholder="Tell us anything that may help our admissions team..."
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- =========================
+                 SUBMIT
+            ========================== -->
+
+            <div class="form-submit">
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+
+                    Submit Application
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+                <p>
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    Your information is kept private and secure.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div
+                id="formStatus"
+                class="form-status"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <a
+                href="index.html"
+                class="school-logo"
+            >
+
+                <span class="logo-main">
+                    HORIZON
+                </span>
+
+                <span class="logo-sub">
+                    INTERNATIONAL SCHOOL
+                </span>
+
+            </a>
+
+
+            <p>
+                Learning with purpose.<br>
+                Growing with confidence.
+            </p>
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+            <a href="index.html#philosophy">
+                About
+            </a>
+
+            <a href="index.html#learning">
+                Learning
+            </a>
+
+            <a href="index.html#campus">
+                Campus
+            </a>
+
+            <a href="admission.html">
+                Admissions
+            </a>
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Horizon International School.
+                All rights reserved.
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================
+     MOBILE MENU SCRIPT
+========================= -->
+
+<script>
+
+    const menuToggle =
+        document.querySelector(".menu-toggle");
+
+    const mobileMenu =
+        document.querySelector(".mobile-menu");
+
+    const mobileMenuClose =
+        document.querySelector(".mobile-menu-close");
+
+
+    if (menuToggle && mobileMenu) {
+
+        menuToggle.addEventListener("click", () => {
+
+            mobileMenu.classList.add("active");
+
+        });
+
+    }
+
+
+    if (mobileMenuClose && mobileMenu) {
+
+        mobileMenuClose.addEventListener("click", () => {
+
+            mobileMenu.classList.remove("active");
+
+        });
+
+    }
+
+
+    document
+        .querySelectorAll(".mobile-menu a")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("active");
+
+            });
+
+        });
+
+</script>
+
+
+</body>
+</html>
