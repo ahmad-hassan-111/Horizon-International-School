@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="description"
+    content="Horizon International School — Administration Dashboard"
+>
+
+<title>Admin Dashboard | Horizon International School</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<!-- Font Awesome -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="css/style.css">
+```
+
+</head>
+
+<body class="admin-page">
+
+<!-- =========================================================
+     ADMIN HEADER
+========================================================= -->
+
+<header class="admin-header">
+
+```
+<a href="index.html" class="school-logo">
+
+    <span class="logo-main">
+        HORIZON
+    </span>
+
+    <span class="logo-sub">
+        INTERNATIONAL SCHOOL
+    </span>
+
+</a>
+
+
+<div class="admin-header-right">
+
+    <span class="admin-label">
+        ADMINISTRATION
+    </span>
+
+
+    <a
+        href="index.html"
+        class="admin-site-link"
+    >
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        View Website
+    </a>
+
+</div>
+```
+
+</header>
+
+<!-- =========================================================
+     ADMIN MAIN
+========================================================= -->
+
+<main class="admin-main">
+
+```
+<!-- =====================================================
+     PAGE INTRO
+====================================================== -->
+
+<section class="admin-intro">
+
+    <div>
+
+        <span class="section-eyebrow">
+            ADMINISTRATION
+        </span>
+
+        <h1>
+            Admissions
+            <span>Overview.</span>
+        </h1>
+
+        <p>
+            Review and manage admission applications
+            submitted through the Horizon website.
+        </p>
+
+    </div>
+
+
+    <div class="admin-refresh">
+
+        <button
+            id="refreshAdmissions"
+            class="admin-refresh-btn"
+            type="button"
+        >
+
+            <i class="fa-solid fa-rotate"></i>
+
+            Refresh
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STATS
+====================================================== -->
+
+<section class="admin-stats">
+
+
+    <article class="admin-stat-card">
+
+        <div class="admin-stat-icon">
+            <i class="fa-solid fa-file-lines"></i>
+        </div>
+
+        <div>
+
+            <span class="admin-stat-label">
+                Total Applications
+            </span>
+
+            <strong id="totalApplications">
+                0
+            </strong>
+
+        </div>
+
+    </article>
+
+
+
+    <article class="admin-stat-card">
+
+        <div class="admin-stat-icon">
+            <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <div>
+
+            <span class="admin-stat-label">
+                Pending
+            </span>
+
+            <strong id="pendingApplications">
+                0
+            </strong>
+
+        </div>
+
+    </article>
+
+
+
+    <article class="admin-stat-card">
+
+        <div class="admin-stat-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div>
+
+            <span class="admin-stat-label">
+                Confirmed
+            </span>
+
+            <strong id="confirmedApplications">
+                0
+            </strong>
+
+        </div>
+
+    </article>
+
+
+
+    <article class="admin-stat-card">
+
+        <div class="admin-stat-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+
+        <div>
+
+            <span class="admin-stat-label">
+                Completed
+            </span>
+
+            <strong id="completedApplications">
+                0
+            </strong>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+
+<!-- =====================================================
+     APPLICATIONS
+====================================================== -->
+
+<section class="admin-applications">
+
+
+    <div class="admin-section-header">
+
+        <div>
+
+            <span class="section-eyebrow">
+                APPLICATIONS
+            </span>
+
+            <h2>
+                Recent
+                <span>Applications.</span>
+            </h2>
+
+        </div>
+
+
+        <div class="admin-controls">
+
+            <div class="admin-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="applicationSearch"
+                    placeholder="Search applications..."
+                    aria-label="Search applications"
+                >
+
+            </div>
+
+
+            <select
+                id="statusFilter"
+                class="admin-filter"
+                aria-label="Filter applications"
+            >
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Confirmed">
+                    Confirmed
+                </option>
+
+                <option value="Completed">
+                    Completed
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         APPLICATION LIST
+    ================================================== -->
+
+    <div
+        id="applicationsContainer"
+        class="applications-container"
+    >
+
+        <!-- Applications will be loaded here -->
+
+        <div class="admin-loading">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            <span>
+                Loading applications...
+            </span>
+
+        </div>
+
+    </div>
+
+
+</section>
+```
+
+</main>
+
+<!-- =========================================================
+     APPLICATION MODAL
+========================================================= -->
+
+<div
+    id="applicationModal"
+    class="application-modal"
+    aria-hidden="true"
+>
+
+```
+<div class="application-modal-overlay"></div>
+
+
+<div class="application-modal-content">
+
+
+    <button
+        id="closeApplicationModal"
+        class="application-modal-close"
+        type="button"
+        aria-label="Close application"
+    >
+        ×
+    </button>
+
+
+    <div class="modal-header">
+
+        <span class="section-eyebrow">
+            APPLICATION DETAILS
+        </span>
+
+        <h2 id="modalStudentName">
+            Student Name
+        </h2>
+
+        <span
+            id="modalStatus"
+            class="application-status"
+        >
+            Pending
+        </span>
+
+    </div>
+
+
+
+    <div class="modal-details">
+
+
+        <div class="modal-detail-group">
+
+            <span>
+                Student
+            </span>
+
+            <strong id="modalStudent">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="modal-detail-group">
+
+            <span>
+                Date of Birth
+            </span>
+
+            <strong id="modalDateOfBirth">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="modal-detail-group">
+
+            <span>
+                Applying For
+            </span>
+
+            <strong id="modalGrade">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="modal-detail-group">
+
+            <span>
+                Parent / Guardian
+            </span>
+
+            <strong id="modalParent">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="modal-detail-group">
+
+            <span>
+                Email
+            </span>
+
+            <strong id="modalEmail">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="modal-detail-group">
+
+            <span>
+                Phone
+            </span>
+
+            <strong id="modalPhone">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="modal-detail-group modal-message">
+
+            <span>
+                Message
+            </span>
+
+            <p id="modalMessage">
+                —
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="modal-actions">
+
+        <button
+            type="button"
+            class="modal-status-btn"
+            data-status="Pending"
+        >
+            Pending
+        </button>
+
+        <button
+            type="button"
+            class="modal-status-btn"
+            data-status="Confirmed"
+        >
+            Confirm
+        </button>
+
+        <button
+            type="button"
+            class="modal-status-btn"
+            data-status="Completed"
+        >
+            Complete
+        </button>
+
+    </div>
+
+
+</div>
+```
+
+</div>
+
+<!-- =========================================================
+     ADMIN JAVASCRIPT
+========================================================= -->
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
