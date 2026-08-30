@@ -1,4 +1,3 @@
-
 import os
 
 import psycopg
@@ -43,7 +42,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 def get_connection():
     if not DATABASE_URL:
         raise RuntimeError("DATABASE_URL is not configured.")
-    
+
     return psycopg.connect(
         DATABASE_URL,
         sslmode="require"
@@ -95,6 +94,10 @@ class Admission(BaseModel):
     email: str
     phone: str | None = None
     message: str | None = None
+
+
+class StatusUpdate(BaseModel):
+    status: str
 
 
 # =========================================================
@@ -224,3 +227,64 @@ def get_admissions():
         )
 
 
+# =========================================================
+# UPDATE ADMISSION STATUS
+# =========================================================
+
+@app.patch("/api/admissions/{admission_id}/status")
+def update_admission_status(
+    admission_id: int,
+    status_update: StatusUpdate
+):
+
+    allowed_statuses = {
+        "Pending",
+        "Confirmed",
+        "Completed"
+    }
+
+    if status_update.status not in allowed_statuses:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid status. Allowed values are Pending, Confirmed, and Completed."
+        )
+
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+
+                cur.execute("""
+                    UPDATE admissions
+                    SET status = %s
+                    WHERE id = %s
+                    RETURNING id, status
+                """, (
+                    status_update.status,
+                    admission_id
+                ))
+
+                updated_admission = cur.fetchone()
+
+            conn.commit()
+
+        if not updated_admission:
+            raise HTTPException(
+                status_code=404,
+                detail="Admission application not found."
+            )
+
+        return {
+            "status": "success",
+            "message": "Admission status updated successfully.",
+            "admission_id": updated_admission[0],
+            "new_status": updated_admission[1]
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
