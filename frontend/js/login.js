@@ -15,9 +15,11 @@ const loginForm = document.getElementById("loginForm");
 const loginButton = document.getElementById("loginButton");
 const loginStatus = document.getElementById("loginStatus");
 
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const passwordToggle = document.getElementById("passwordToggle");
+const passwordInput =
+    document.getElementById("password");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
 
 
 /* =========================================================
@@ -34,9 +36,10 @@ if (passwordToggle && passwordInput) {
         passwordInput.type =
             isPassword ? "text" : "password";
 
-        passwordToggle.innerHTML = isPassword
-            ? '<i class="fa-regular fa-eye-slash"></i>'
-            : '<i class="fa-regular fa-eye"></i>';
+        passwordToggle.innerHTML =
+            isPassword
+                ? '<i class="fa-regular fa-eye-slash"></i>'
+                : '<i class="fa-regular fa-eye"></i>';
 
         passwordToggle.setAttribute(
             "aria-label",
@@ -44,14 +47,12 @@ if (passwordToggle && passwordInput) {
                 ? "Hide password"
                 : "Show password"
         );
-
     });
-
 }
 
 
 /* =========================================================
-   STATUS MESSAGE
+   STATUS
 ========================================================= */
 
 function showStatus(message, type = "info") {
@@ -62,22 +63,8 @@ function showStatus(message, type = "info") {
 
     loginStatus.textContent = message;
 
-    loginStatus.className = "login-status";
-
-    if (type === "error") {
-
-        loginStatus.style.color = "#9B3D32";
-
-    } else if (type === "success") {
-
-        loginStatus.style.color = "#315C4C";
-
-    } else {
-
-        loginStatus.style.color = "#68746E";
-
-    }
-
+    loginStatus.className =
+        `login-status ${type}`;
 }
 
 
@@ -87,155 +74,150 @@ function showStatus(message, type = "info") {
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", async (event) => {
+    loginForm.addEventListener(
+        "submit",
+        async (event) => {
 
-        event.preventDefault();
-
-
-        const email =
-            emailInput.value.trim();
-
-        const password =
-            passwordInput.value;
+            event.preventDefault();
 
 
-        /* ---------------------------------------------
-           VALIDATION
-        --------------------------------------------- */
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
 
-        if (!email || !password) {
+            const password =
+                passwordInput.value;
+
+
+            /* -----------------------------------------
+               VALIDATION
+            ----------------------------------------- */
+
+            if (!email || !password) {
+
+                showStatus(
+                    "Please enter your email and password.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               LOADING
+            ----------------------------------------- */
+
+            loginButton.disabled = true;
+
+            loginButton.querySelector("span")
+                .textContent = "Signing in...";
 
             showStatus(
-                "Please enter your email and password.",
-                "error"
+                "Verifying your credentials...",
+                "info"
             );
 
-            return;
-        }
+
+            try {
+
+                /* -------------------------------------
+                   API REQUEST
+                ------------------------------------- */
+
+                const response =
+                    await fetch(
+                        `${API_URL}/login`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                email: email,
+                                password: password
+                            })
+                        }
+                    );
 
 
-        /* ---------------------------------------------
-           LOADING
-        --------------------------------------------- */
-
-        loginButton.disabled = true;
-
-        const buttonText =
-            loginButton.querySelector("span");
-
-        if (buttonText) {
-            buttonText.textContent = "Signing in...";
-        }
-
-        showStatus(
-            "Verifying your credentials...",
-            "info"
-        );
+                const data =
+                    await response.json();
 
 
-        /* ---------------------------------------------
-           API REQUEST
-        --------------------------------------------- */
+                /* -------------------------------------
+                   FAILED
+                ------------------------------------- */
 
-        try {
+                if (!response.ok) {
 
-            const response = await fetch(
-                `${API_URL}/login`,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        email: email,
-                        password: password
-                    })
+                    throw new Error(
+                        data.detail ||
+                        data.message ||
+                        "Invalid email or password."
+                    );
                 }
-            );
 
 
-            const data =
-                await response.json();
+                /* -------------------------------------
+                   SUCCESS
+                ------------------------------------- */
 
-
-            /* -----------------------------------------
-               LOGIN FAILED
-            ----------------------------------------- */
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.detail ||
-                    data.message ||
-                    "Invalid email or password."
+                sessionStorage.setItem(
+                    "horizonAdminLoggedIn",
+                    "true"
                 );
+
+
+                showStatus(
+                    "Login successful. Opening dashboard...",
+                    "success"
+                );
+
+
+                /* -------------------------------------
+                   REDIRECT
+                ------------------------------------- */
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "admin.html";
+
+                }, 700);
+
             }
 
 
-            if (data.status !== "success") {
+            /* -----------------------------------------
+               ERROR
+            ----------------------------------------- */
 
-                throw new Error(
-                    data.message ||
-                    "Invalid email or password."
+            catch (error) {
+
+                console.error(
+                    "Horizon login error:",
+                    error
                 );
-            }
 
+                showStatus(
+                    error.message ||
+                    "Unable to connect to the server.",
+                    "error"
+                );
 
-            /* -----------------------------------------
-               LOGIN SUCCESS
-            ----------------------------------------- */
+                loginButton.disabled = false;
 
-            sessionStorage.setItem(
-                "horizonAdminLoggedIn",
-                "true"
-            );
-
-
-            showStatus(
-                "Login successful. Opening dashboard...",
-                "success"
-            );
-
-
-            /* -----------------------------------------
-               REDIRECT
-            ----------------------------------------- */
-
-            setTimeout(() => {
-
-                window.location.href =
-                    "admin.html";
-
-            }, 700);
-
-
-        } catch (error) {
-
-            console.error(
-                "Horizon login error:",
-                error
-            );
-
-
-            showStatus(
-                error.message ||
-                "Unable to connect to the server.",
-                "error"
-            );
-
-
-            loginButton.disabled = false;
-
-
-            if (buttonText) {
-                buttonText.textContent =
+                loginButton.querySelector("span")
+                    .textContent =
                     "Access Dashboard";
             }
 
         }
-
-    });
-
+    );
 }
