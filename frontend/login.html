@@ -1,0 +1,950 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Horizon International School — Login</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+        /* =========================================================
+           HORIZON INTERNATIONAL SCHOOL
+           LOGIN PAGE
+        ========================================================= */
+
+        :root {
+            --forest: #173F35;
+            --forest-light: #315C4C;
+            --gold: #C89B5B;
+            --ivory: #F3EFE6;
+            --sand: #E6E0D4;
+            --charcoal: #17201D;
+            --white: #FFFFFF;
+            --muted: #68746E;
+            --border: rgba(23, 63, 53, 0.14);
+            --transition: 0.4s ease;
+        }
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Inter", sans-serif;
+            background: var(--ivory);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .login-page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+        }
+
+        /* =========================================================
+           LEFT SIDE — BRAND
+        ========================================================= */
+
+        .login-visual {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 7vw 6vw;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--forest) 0%,
+                    #214C40 55%,
+                    var(--forest-light) 100%
+                );
+        }
+
+        /* Decorative circles */
+
+        .login-visual::before {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 650px;
+            top: -290px;
+            right: -230px;
+            border: 1px solid rgba(200, 155, 91, 0.3);
+            border-radius: 50%;
+        }
+
+        .login-visual::after {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            left: -240px;
+            bottom: -220px;
+            border: 1px solid rgba(243, 239, 230, 0.1);
+            border-radius: 50%;
+        }
+
+        /* Gold line */
+
+        .visual-line {
+            position: absolute;
+            top: 0;
+            left: 9vw;
+            width: 1px;
+            height: 28vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(200, 155, 91, 0),
+                rgba(200, 155, 91, 0.6)
+            );
+        }
+
+        /* Brand */
+
+        .visual-brand {
+            position: absolute;
+            top: 50px;
+            left: 6vw;
+            z-index: 2;
+        }
+
+        .visual-brand-main {
+            color: var(--ivory);
+            font-size: clamp(1.25rem, 1.8vw, 1.8rem);
+            font-weight: 700;
+            letter-spacing: 0.16em;
+        }
+
+        .visual-brand-sub {
+            margin-top: 6px;
+            color: var(--gold);
+            font-size: 0.52rem;
+            font-weight: 600;
+            letter-spacing: 0.27em;
+        }
+
+        /* Main visual content */
+
+        .visual-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+        }
+
+        .visual-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+
+            color: var(--gold);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .visual-eyebrow::before {
+            content: "";
+            width: 42px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .visual-content h1 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(4rem, 6.5vw, 7rem);
+            font-weight: 400;
+            line-height: 0.9;
+            letter-spacing: -0.045em;
+            color: var(--ivory);
+        }
+
+        .visual-content h1 span {
+            display: block;
+            color: var(--gold);
+        }
+
+        .visual-description {
+            max-width: 500px;
+            margin-top: 32px;
+            color: rgba(243, 239, 230, 0.68);
+            font-size: 0.84rem;
+            line-height: 1.85;
+        }
+
+        /* Decorative number */
+
+        .visual-number {
+            position: absolute;
+            right: 6vw;
+            bottom: 6vw;
+            z-index: 2;
+
+            color: rgba(243, 239, 230, 0.12);
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(7rem, 13vw, 13rem);
+            line-height: 0.8;
+            user-select: none;
+        }
+
+        /* =========================================================
+           RIGHT SIDE — LOGIN
+        ========================================================= */
+
+        .login-panel {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 7vw;
+            background: var(--ivory);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 470px;
+            animation: loginIn 0.8s ease forwards;
+        }
+
+        /* Back link */
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 55px;
+
+            color: var(--muted);
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+
+            transition:
+                color var(--transition),
+                gap var(--transition);
+        }
+
+        .back-home i {
+            color: var(--gold);
+            font-size: 0.7rem;
+        }
+
+        .back-home:hover {
+            color: var(--forest);
+            gap: 14px;
+        }
+
+        /* Heading */
+
+        .login-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 20px;
+
+            color: var(--gold);
+            font-size: 0.63rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .login-eyebrow::before {
+            content: "";
+            width: 35px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .login-box h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(3.3rem, 5vw, 5.2rem);
+            font-weight: 400;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            color: var(--forest);
+        }
+
+        .login-box h2 span {
+            display: block;
+            color: var(--charcoal);
+        }
+
+        .login-intro {
+            max-width: 400px;
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .login-form {
+            margin-top: 45px;
+        }
+
+        .field {
+            margin-bottom: 27px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 10px;
+
+            color: var(--forest);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap i {
+            position: absolute;
+            left: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            color: var(--gold);
+            font-size: 0.82rem;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            height: 52px;
+
+            padding: 0 38px;
+
+            border: none;
+            border-bottom: 1px solid rgba(23, 63, 53, 0.22);
+            border-radius: 0;
+
+            outline: none;
+            background: transparent;
+
+            color: var(--charcoal);
+            font-size: 0.86rem;
+
+            transition:
+                border-color var(--transition),
+                padding var(--transition);
+        }
+
+        .input-wrap input::placeholder {
+            color: #9A9F9B;
+        }
+
+        .input-wrap input:focus {
+            border-color: var(--gold);
+        }
+
+        /* Password button */
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 2px;
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            color: #7A837E;
+            cursor: pointer;
+
+            transition: color var(--transition);
+        }
+
+        .password-toggle:hover {
+            color: var(--forest);
+        }
+
+        /* =========================================================
+           FORM OPTIONS
+        ========================================================= */
+
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 5px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: var(--muted);
+            font-size: 0.68rem;
+        }
+
+        .remember input {
+            width: 14px;
+            height: 14px;
+            accent-color: var(--forest);
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: var(--forest);
+            font-size: 0.66rem;
+            font-weight: 600;
+            transition: color var(--transition);
+        }
+
+        .forgot-password:hover {
+            color: var(--gold);
+        }
+
+        /* =========================================================
+           BUTTON
+        ========================================================= */
+
+        .login-button {
+            width: 100%;
+            min-height: 56px;
+
+            margin-top: 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 22px;
+
+            border: none;
+            background: var(--forest);
+            color: var(--white);
+
+            cursor: pointer;
+
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+
+            transition:
+                background var(--transition),
+                transform var(--transition);
+        }
+
+        .login-button span {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .login-button i {
+            color: var(--gold);
+            transition: transform var(--transition);
+        }
+
+        .login-button:hover {
+            background: var(--forest-light);
+            transform: translateY(-2px);
+        }
+
+        .login-button:hover i {
+            transform: translateX(5px);
+        }
+
+        .login-button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* =========================================================
+           STATUS
+        ========================================================= */
+
+        .login-status {
+            min-height: 22px;
+            margin-top: 18px;
+
+            font-size: 0.72rem;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           SECURITY NOTE
+        ========================================================= */
+
+        .security-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+
+            margin-top: 45px;
+            padding-top: 22px;
+
+            border-top: 1px solid var(--border);
+
+            color: #7A837E;
+            font-size: 0.64rem;
+            line-height: 1.7;
+        }
+
+        .security-note i {
+            margin-top: 2px;
+            color: var(--gold);
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .login-footer {
+            margin-top: 35px;
+
+            color: rgba(23, 32, 29, 0.4);
+            font-size: 0.58rem;
+            letter-spacing: 0.04em;
+        }
+
+        /* =========================================================
+           ANIMATION
+        ========================================================= */
+
+        @keyframes loginIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 950px) {
+
+            .login-page {
+                grid-template-columns: 1fr;
+            }
+
+            .login-visual {
+                min-height: 420px;
+                padding: 60px 7vw;
+            }
+
+            .visual-brand {
+                left: 7vw;
+                top: 35px;
+            }
+
+            .visual-content h1 {
+                font-size: clamp(3.8rem, 9vw, 6rem);
+            }
+
+            .visual-number {
+                right: 7vw;
+                bottom: 45px;
+            }
+
+            .login-panel {
+                min-height: auto;
+                padding: 80px 7vw 70px;
+            }
+
+            .back-home {
+                margin-bottom: 45px;
+            }
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            .login-visual {
+                min-height: 390px;
+                padding: 45px 6vw 55px;
+            }
+
+            .visual-brand {
+                top: 28px;
+                left: 6vw;
+            }
+
+            .visual-brand-main {
+                font-size: 1.15rem;
+            }
+
+            .visual-brand-sub {
+                font-size: 0.45rem;
+            }
+
+            .visual-content {
+                max-width: 90%;
+            }
+
+            .visual-eyebrow {
+                margin-bottom: 20px;
+                font-size: 0.57rem;
+            }
+
+            .visual-content h1 {
+                font-size: clamp(3.4rem, 15vw, 5rem);
+            }
+
+            .visual-description {
+                margin-top: 23px;
+                font-size: 0.75rem;
+            }
+
+            .visual-number {
+                right: 5vw;
+                bottom: 35px;
+                font-size: 6rem;
+            }
+
+            .login-panel {
+                padding: 65px 6vw 55px;
+            }
+
+            .back-home {
+                margin-bottom: 40px;
+            }
+
+            .login-box h2 {
+                font-size: clamp(3rem, 15vw, 4.5rem);
+            }
+
+            .login-intro {
+                margin-top: 22px;
+                font-size: 0.77rem;
+            }
+
+            .login-form {
+                margin-top: 38px;
+            }
+
+            .form-options {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .forgot-password {
+                display: none;
+            }
+
+            .security-note {
+                margin-top: 38px;
+            }
+        }
+
+        /* =========================================================
+           SMALL PHONES
+        ========================================================= */
+
+        @media (max-width: 380px) {
+
+            .login-visual {
+                min-height: 365px;
+            }
+
+            .visual-content h1 {
+                font-size: 3.25rem;
+            }
+
+            .visual-number {
+                display: none;
+            }
+
+            .login-panel {
+                padding-top: 55px;
+            }
+
+            .login-box h2 {
+                font-size: 2.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <!-- =====================================================
+             LEFT BRAND PANEL
+        ====================================================== -->
+
+        <section class="login-visual">
+
+            <div class="visual-line"></div>
+
+            <div class="visual-brand">
+                <div class="visual-brand-main">
+                    HORIZON
+                </div>
+
+                <div class="visual-brand-sub">
+                    INTERNATIONAL SCHOOL
+                </div>
+            </div>
+
+            <div class="visual-content">
+
+                <div class="visual-eyebrow">
+                    Administration Portal
+                </div>
+
+                <h1>
+                    Welcome
+                    <span>back.</span>
+                </h1>
+
+                <p class="visual-description">
+                    A private space for the Horizon administration team
+                    to manage admissions, applications, and school
+                    operations.
+                </p>
+
+            </div>
+
+            <div class="visual-number">
+                01
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             LOGIN PANEL
+        ====================================================== -->
+
+        <section class="login-panel">
+
+            <div class="login-box">
+
+                <a href="index.html" class="back-home">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Horizon
+                </a>
+
+                <div class="login-eyebrow">
+                    Secure Access
+                </div>
+
+                <h2>
+                    Sign
+                    <span>in.</span>
+                </h2>
+
+                <p class="login-intro">
+                    Enter your administrator credentials to access
+                    the Horizon International School dashboard.
+                </p>
+
+
+                <!-- =================================================
+                     LOGIN FORM
+                ================================================== -->
+
+                <form class="login-form" id="loginForm">
+
+                    <!-- EMAIL -->
+
+                    <div class="field">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrap">
+
+                            <i class="fa-regular fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="administrator@horizon.edu"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="field">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrap">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password"
+                            >
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OPTIONS -->
+
+                    <div class="form-options">
+
+                        <label class="remember">
+
+                            <input
+                                type="checkbox"
+                                id="remember"
+                                name="remember"
+                            >
+
+                            <span>Remember me</span>
+
+                        </label>
+
+                        <a href="#" class="forgot-password">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginButton"
+                    >
+
+                        <span>
+                            Access Dashboard
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+
+                    <!-- STATUS -->
+
+                    <div
+                        class="login-status"
+                        id="loginStatus"
+                        aria-live="polite"
+                    ></div>
+
+                </form>
+
+
+                <!-- SECURITY -->
+
+                <div class="security-note">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <p>
+                        This is a secure administration area.
+                        Authorized Horizon personnel only.
+                    </p>
+
+                </div>
+
+
+                <div class="login-footer">
+                    © 2026 Horizon International School
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Login JavaScript -->
+    <script src="js/login.js"></script>
+
+</body>
+</html>
+
