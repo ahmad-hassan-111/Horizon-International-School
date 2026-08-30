@@ -1,192 +1,194 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-```
-// =========================================================
-// CONFIG
-// =========================================================
+    // =========================================================
+    // CONFIG
+    // =========================================================
 
-const API_URL =
-    "https://horizon-international-school.vercel.app/api";
-
-
-// =========================================================
-// ELEMENTS
-// =========================================================
-
-const applicationsContainer =
-    document.getElementById("applicationsContainer");
-
-const totalApplications =
-    document.getElementById("totalApplications");
-
-const pendingApplications =
-    document.getElementById("pendingApplications");
-
-const confirmedApplications =
-    document.getElementById("confirmedApplications");
-
-const completedApplications =
-    document.getElementById("completedApplications");
-
-const refreshButton =
-    document.getElementById("refreshAdmissions");
-
-const searchInput =
-    document.getElementById("applicationSearch");
-
-const statusFilter =
-    document.getElementById("statusFilter");
+    const API_URL =
+        "https://horizon-international-school.vercel.app/api";
 
 
-// Modal elements
-const applicationModal =
-    document.getElementById("applicationModal");
+    // =========================================================
+    // ELEMENTS
+    // =========================================================
 
-const modalOverlay =
-    document.querySelector(".application-modal-overlay");
+    const applicationsContainer =
+        document.getElementById("applicationsContainer");
 
-const closeApplicationModal =
-    document.getElementById("closeApplicationModal");
+    const totalApplications =
+        document.getElementById("totalApplications");
 
-const modalStudentName =
-    document.getElementById("modalStudentName");
+    const pendingApplications =
+        document.getElementById("pendingApplications");
 
-const modalStatus =
-    document.getElementById("modalStatus");
+    const confirmedApplications =
+        document.getElementById("confirmedApplications");
 
-const modalStudent =
-    document.getElementById("modalStudent");
+    const completedApplications =
+        document.getElementById("completedApplications");
 
-const modalDateOfBirth =
-    document.getElementById("modalDateOfBirth");
+    const refreshButton =
+        document.getElementById("refreshAdmissions");
 
-const modalGrade =
-    document.getElementById("modalGrade");
+    const searchInput =
+        document.getElementById("applicationSearch");
 
-const modalParent =
-    document.getElementById("modalParent");
-
-const modalEmail =
-    document.getElementById("modalEmail");
-
-const modalPhone =
-    document.getElementById("modalPhone");
-
-const modalMessage =
-    document.getElementById("modalMessage");
+    const statusFilter =
+        document.getElementById("statusFilter");
 
 
-// =========================================================
-// STATE
-// =========================================================
+    // Modal elements
+    const applicationModal =
+        document.getElementById("applicationModal");
 
-let admissions = [];
-let selectedAdmission = null;
+    const modalOverlay =
+        document.querySelector(".application-modal-overlay");
 
+    const closeApplicationModal =
+        document.getElementById("closeApplicationModal");
 
-// =========================================================
-// LOAD ADMISSIONS
-// =========================================================
+    const modalStudentName =
+        document.getElementById("modalStudentName");
 
-async function loadAdmissions() {
+    const modalStatus =
+        document.getElementById("modalStatus");
 
-    if (applicationsContainer) {
+    const modalStudent =
+        document.getElementById("modalStudent");
 
-        applicationsContainer.innerHTML = `
-            <div class="admin-loading">
-                <i class="fa-solid fa-spinner fa-spin"></i>
-                <span>Loading applications...</span>
-            </div>
-        `;
+    const modalDateOfBirth =
+        document.getElementById("modalDateOfBirth");
 
-    }
+    const modalGrade =
+        document.getElementById("modalGrade");
 
+    const modalParent =
+        document.getElementById("modalParent");
 
-    try {
+    const modalEmail =
+        document.getElementById("modalEmail");
 
-        const response = await fetch(
-            `${API_URL}/admissions`
-        );
+    const modalPhone =
+        document.getElementById("modalPhone");
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                `Server returned ${response.status}`
-            );
-
-        }
+    const modalMessage =
+        document.getElementById("modalMessage");
 
 
-        const data = await response.json();
+    // =========================================================
+    // STATE
+    // =========================================================
+
+    let admissions = [];
+    let selectedAdmission = null;
 
 
-        if (data.status !== "success") {
+    // =========================================================
+    // LOAD ADMISSIONS
+    // =========================================================
 
-            throw new Error(
-                "Unable to load admissions."
-            );
-
-        }
-
-
-        admissions =
-            Array.isArray(data.admissions)
-                ? data.admissions
-                : [];
-
-
-        updateStats();
-        renderAdmissions();
-
-
-    } catch (error) {
-
-        console.error(
-            "Admissions loading error:",
-            error
-        );
-
+    async function loadAdmissions() {
 
         if (applicationsContainer) {
 
             applicationsContainer.innerHTML = `
-                <div class="admin-empty">
-
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-
-                    <h3>
-                        Unable to load applications
-                    </h3>
-
-                    <p>
-                        Please check your connection and try again.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="admin-retry-btn"
-                        id="retryAdmissions"
-                    >
-                        Try Again
-                    </button>
-
+                <div class="admin-loading">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <span>Loading applications...</span>
                 </div>
             `;
 
+        }
 
-            const retryButton =
-                document.getElementById(
-                    "retryAdmissions"
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/admissions`
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `Server returned ${response.status}`
                 );
 
+            }
 
-            if (retryButton) {
 
-                retryButton.addEventListener(
-                    "click",
-                    loadAdmissions
+            const data = await response.json();
+
+
+            if (data.status !== "success") {
+
+                throw new Error(
+                    "Unable to load admissions."
                 );
+
+            }
+
+
+            admissions =
+                Array.isArray(data.admissions)
+                    ? data.admissions
+                    : [];
+
+
+            updateStats();
+
+            renderAdmissions();
+
+
+        } catch (error) {
+
+            console.error(
+                "Admissions loading error:",
+                error
+            );
+
+
+            if (applicationsContainer) {
+
+                applicationsContainer.innerHTML = `
+                    <div class="admin-empty">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        <h3>
+                            Unable to load applications
+                        </h3>
+
+                        <p>
+                            Please check your connection and try again.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="admin-retry-btn"
+                            id="retryAdmissions"
+                        >
+                            Try Again
+                        </button>
+
+                    </div>
+                `;
+
+
+                const retryButton =
+                    document.getElementById(
+                        "retryAdmissions"
+                    );
+
+
+                if (retryButton) {
+
+                    retryButton.addEventListener(
+                        "click",
+                        loadAdmissions
+                    );
+
+                }
 
             }
 
@@ -194,519 +196,517 @@ async function loadAdmissions() {
 
     }
 
-}
+
+    // =========================================================
+    // UPDATE STATISTICS
+    // =========================================================
+
+    function updateStats() {
+
+        const total =
+            admissions.length;
 
 
-// =========================================================
-// UPDATE STATISTICS
-// =========================================================
-
-function updateStats() {
-
-    const total =
-        admissions.length;
+        const pending =
+            admissions.filter(
+                admission =>
+                    admission.status === "Pending"
+            ).length;
 
 
-    const pending =
-        admissions.filter(
-            admission =>
-                admission.status === "Pending"
-        ).length;
+        const confirmed =
+            admissions.filter(
+                admission =>
+                    admission.status === "Confirmed"
+            ).length;
 
 
-    const confirmed =
-        admissions.filter(
-            admission =>
-                admission.status === "Confirmed"
-        ).length;
+        const completed =
+            admissions.filter(
+                admission =>
+                    admission.status === "Completed"
+            ).length;
 
 
-    const completed =
-        admissions.filter(
-            admission =>
-                admission.status === "Completed"
-        ).length;
+        if (totalApplications) {
+            totalApplications.textContent = total;
+        }
 
 
-    if (totalApplications) {
-        totalApplications.textContent = total;
+        if (pendingApplications) {
+            pendingApplications.textContent = pending;
+        }
+
+
+        if (confirmedApplications) {
+            confirmedApplications.textContent = confirmed;
+        }
+
+
+        if (completedApplications) {
+            completedApplications.textContent = completed;
+        }
+
     }
 
 
-    if (pendingApplications) {
-        pendingApplications.textContent = pending;
+    // =========================================================
+    // FILTER + SEARCH
+    // =========================================================
+
+    function getFilteredAdmissions() {
+
+        const searchTerm =
+            searchInput
+                ? searchInput.value.trim().toLowerCase()
+                : "";
+
+
+        const selectedStatus =
+            statusFilter
+                ? statusFilter.value
+                : "all";
+
+
+        return admissions.filter(
+            admission => {
+
+                const student =
+                    String(
+                        admission.student_name || ""
+                    ).toLowerCase();
+
+
+                const parent =
+                    String(
+                        admission.parent_name || ""
+                    ).toLowerCase();
+
+
+                const email =
+                    String(
+                        admission.email || ""
+                    ).toLowerCase();
+
+
+                const grade =
+                    String(
+                        admission.grade || ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !searchTerm ||
+                    student.includes(searchTerm) ||
+                    parent.includes(searchTerm) ||
+                    email.includes(searchTerm) ||
+                    grade.includes(searchTerm);
+
+
+                const matchesStatus =
+                    selectedStatus === "all" ||
+                    admission.status === selectedStatus;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
     }
 
 
-    if (confirmedApplications) {
-        confirmedApplications.textContent = confirmed;
-    }
+    // =========================================================
+    // RENDER APPLICATIONS
+    // =========================================================
+
+    function renderAdmissions() {
+
+        if (!applicationsContainer) {
+            return;
+        }
 
 
-    if (completedApplications) {
-        completedApplications.textContent = completed;
-    }
-
-}
+        const filteredAdmissions =
+            getFilteredAdmissions();
 
 
-// =========================================================
-// FILTER + SEARCH
-// =========================================================
+        if (filteredAdmissions.length === 0) {
 
-function getFilteredAdmissions() {
+            applicationsContainer.innerHTML = `
+                <div class="admin-empty">
 
-    const searchTerm =
-        searchInput
-            ? searchInput.value.trim().toLowerCase()
-            : "";
+                    <i class="fa-solid fa-folder-open"></i>
 
+                    <h3>
+                        No applications found
+                    </h3>
 
-    const selectedStatus =
-        statusFilter
-            ? statusFilter.value
-            : "all";
+                    <p>
+                        Try changing your search or filter.
+                    </p>
 
+                </div>
+            `;
 
-    return admissions.filter(
-        admission => {
-
-            const student =
-                String(
-                    admission.student_name || ""
-                ).toLowerCase();
-
-
-            const parent =
-                String(
-                    admission.parent_name || ""
-                ).toLowerCase();
-
-
-            const email =
-                String(
-                    admission.email || ""
-                ).toLowerCase();
-
-
-            const grade =
-                String(
-                    admission.grade || ""
-                ).toLowerCase();
-
-
-            const matchesSearch =
-                !searchTerm ||
-                student.includes(searchTerm) ||
-                parent.includes(searchTerm) ||
-                email.includes(searchTerm) ||
-                grade.includes(searchTerm);
-
-
-            const matchesStatus =
-                selectedStatus === "all" ||
-                admission.status === selectedStatus;
-
-
-            return (
-                matchesSearch &&
-                matchesStatus
-            );
+            return;
 
         }
-    );
-
-}
 
 
-// =========================================================
-// RENDER APPLICATIONS
-// =========================================================
-
-function renderAdmissions() {
-
-    if (!applicationsContainer) {
-        return;
-    }
+        applicationsContainer.innerHTML =
+            filteredAdmissions
+                .map(createApplicationCard)
+                .join("");
 
 
-    const filteredAdmissions =
-        getFilteredAdmissions();
+        document
+            .querySelectorAll(".application-card")
+            .forEach(card => {
+
+                card.addEventListener(
+                    "click",
+                    () => {
+
+                        const id =
+                            Number(
+                                card.dataset.id
+                            );
 
 
-    if (filteredAdmissions.length === 0) {
-
-        applicationsContainer.innerHTML = `
-            <div class="admin-empty">
-
-                <i class="fa-solid fa-folder-open"></i>
-
-                <h3>
-                    No applications found
-                </h3>
-
-                <p>
-                    Try changing your search or filter.
-                </p>
-
-            </div>
-        `;
-
-        return;
-
-    }
+                        const admission =
+                            admissions.find(
+                                item =>
+                                    item.id === id
+                            );
 
 
-    applicationsContainer.innerHTML =
-        filteredAdmissions
-            .map(createApplicationCard)
-            .join("");
+                        if (admission) {
 
+                            openApplicationModal(
+                                admission
+                            );
 
-    document
-        .querySelectorAll(".application-card")
-        .forEach(card => {
-
-            card.addEventListener(
-                "click",
-                () => {
-
-                    const id =
-                        Number(
-                            card.dataset.id
-                        );
-
-
-                    const admission =
-                        admissions.find(
-                            item =>
-                                item.id === id
-                        );
-
-
-                    if (admission) {
-
-                        openApplicationModal(
-                            admission
-                        );
+                        }
 
                     }
+                );
 
-                }
+            });
+
+    }
+
+
+    // =========================================================
+    // APPLICATION CARD
+    // =========================================================
+
+    function createApplicationCard(admission) {
+
+        const studentName =
+            escapeHTML(
+                admission.student_name ||
+                "Unnamed Student"
             );
 
-        });
 
-}
-
-
-// =========================================================
-// APPLICATION CARD
-// =========================================================
-
-function createApplicationCard(admission) {
-
-    const studentName =
-        escapeHTML(
-            admission.student_name ||
-            "Unnamed Student"
-        );
+        const parentName =
+            escapeHTML(
+                admission.parent_name ||
+                "—"
+            );
 
 
-    const parentName =
-        escapeHTML(
-            admission.parent_name ||
-            "—"
-        );
+        const grade =
+            escapeHTML(
+                admission.grade ||
+                "—"
+            );
 
 
-    const grade =
-        escapeHTML(
-            admission.grade ||
-            "—"
-        );
+        const email =
+            escapeHTML(
+                admission.email ||
+                "—"
+            );
 
 
-    const email =
-        escapeHTML(
-            admission.email ||
-            "—"
-        );
+        const status =
+            escapeHTML(
+                admission.status ||
+                "Pending"
+            );
 
 
-    const status =
-        escapeHTML(
-            admission.status ||
-            "Pending"
-        );
+        const date =
+            formatDate(
+                admission.created_at
+            );
 
 
-    const date =
-        formatDate(
-            admission.created_at
-        );
+        return `
+            <article
+                class="application-card"
+                data-id="${admission.id}"
+            >
+
+                <div class="application-card-number">
+                    #${admission.id}
+                </div>
 
 
-    return `
-        <article
-            class="application-card"
-            data-id="${admission.id}"
-        >
+                <div class="application-card-main">
 
-            <div class="application-card-number">
-                #${admission.id}
-            </div>
+                    <div class="application-card-top">
+
+                        <div>
+
+                            <h3>
+                                ${studentName}
+                            </h3>
+
+                            <p>
+                                ${parentName}
+                            </p>
+
+                        </div>
 
 
-            <div class="application-card-main">
-
-                <div class="application-card-top">
-
-                    <div>
-
-                        <h3>
-                            ${studentName}
-                        </h3>
-
-                        <p>
-                            ${parentName}
-                        </p>
+                        <span
+                            class="application-status status-${status.toLowerCase()}"
+                        >
+                            ${status}
+                        </span>
 
                     </div>
 
 
-                    <span
-                        class="application-status status-${status.toLowerCase()}"
-                    >
-                        ${status}
-                    </span>
+                    <div class="application-card-info">
+
+                        <span>
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            ${grade}
+                        </span>
+
+
+                        <span>
+                            <i class="fa-solid fa-envelope"></i>
+                            ${email}
+                        </span>
+
+
+                        <span>
+                            <i class="fa-regular fa-calendar"></i>
+                            ${date}
+                        </span>
+
+                    </div>
 
                 </div>
 
 
-                <div class="application-card-info">
+                <div class="application-card-arrow">
 
-                    <span>
-                        <i class="fa-solid fa-graduation-cap"></i>
-                        ${grade}
-                    </span>
-
-
-                    <span>
-                        <i class="fa-solid fa-envelope"></i>
-                        ${email}
-                    </span>
-
-
-                    <span>
-                        <i class="fa-regular fa-calendar"></i>
-                        ${date}
-                    </span>
+                    <i class="fa-solid fa-arrow-right"></i>
 
                 </div>
 
-            </div>
-
-
-            <div class="application-card-arrow">
-
-                <i class="fa-solid fa-arrow-right"></i>
-
-            </div>
-
-        </article>
-    `;
-
-}
-
-
-// =========================================================
-// OPEN MODAL
-// =========================================================
-
-function openApplicationModal(admission) {
-
-    selectedAdmission =
-        admission;
-
-
-    if (modalStudentName) {
-
-        modalStudentName.textContent =
-            admission.student_name ||
-            "Unnamed Student";
+            </article>
+        `;
 
     }
 
 
-    if (modalStatus) {
+    // =========================================================
+    // OPEN MODAL
+    // =========================================================
 
-        modalStatus.textContent =
-            admission.status ||
-            "Pending";
+    function openApplicationModal(admission) {
 
-        updateModalStatusClass(
-            admission.status
-        );
-
-    }
+        selectedAdmission =
+            admission;
 
 
-    if (modalStudent) {
+        if (modalStudentName) {
 
-        modalStudent.textContent =
-            admission.student_name ||
-            "—";
+            modalStudentName.textContent =
+                admission.student_name ||
+                "Unnamed Student";
 
-    }
-
-
-    if (modalDateOfBirth) {
-
-        modalDateOfBirth.textContent =
-            admission.date_of_birth ||
-            "—";
-
-    }
+        }
 
 
-    if (modalGrade) {
+        if (modalStatus) {
 
-        modalGrade.textContent =
-            admission.grade ||
-            "—";
+            modalStatus.textContent =
+                admission.status ||
+                "Pending";
 
-    }
+            updateModalStatusClass(
+                admission.status
+            );
 
-
-    if (modalParent) {
-
-        modalParent.textContent =
-            admission.parent_name ||
-            "—";
-
-    }
+        }
 
 
-    if (modalEmail) {
+        if (modalStudent) {
 
-        modalEmail.textContent =
-            admission.email ||
-            "—";
+            modalStudent.textContent =
+                admission.student_name ||
+                "—";
 
-    }
-
-
-    if (modalPhone) {
-
-        modalPhone.textContent =
-            admission.phone ||
-            "—";
-
-    }
+        }
 
 
-    if (modalMessage) {
+        if (modalDateOfBirth) {
 
-        modalMessage.textContent =
-            admission.message ||
-            "No additional message.";
+            modalDateOfBirth.textContent =
+                admission.date_of_birth ||
+                "—";
 
-    }
-
-
-    if (applicationModal) {
-
-        applicationModal.classList.add(
-            "active"
-        );
-
-        applicationModal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow =
-            "hidden";
-
-    }
-
-}
+        }
 
 
-// =========================================================
-// CLOSE MODAL
-// =========================================================
+        if (modalGrade) {
 
-function closeModal() {
+            modalGrade.textContent =
+                admission.grade ||
+                "—";
 
-    if (!applicationModal) {
-        return;
-    }
+        }
 
 
-    applicationModal.classList.remove(
-        "active"
-    );
+        if (modalParent) {
+
+            modalParent.textContent =
+                admission.parent_name ||
+                "—";
+
+        }
 
 
-    applicationModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
+        if (modalEmail) {
+
+            modalEmail.textContent =
+                admission.email ||
+                "—";
+
+        }
 
 
-    document.body.style.overflow =
-        "";
+        if (modalPhone) {
+
+            modalPhone.textContent =
+                admission.phone ||
+                "—";
+
+        }
 
 
-    selectedAdmission =
-        null;
+        if (modalMessage) {
 
-}
+            modalMessage.textContent =
+                admission.message ||
+                "No additional message.";
 
-
-if (closeApplicationModal) {
-
-    closeApplicationModal.addEventListener(
-        "click",
-        closeModal
-    );
-
-}
+        }
 
 
-if (modalOverlay) {
+        if (applicationModal) {
 
-    modalOverlay.addEventListener(
-        "click",
-        closeModal
-    );
-
-}
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Escape" &&
-            applicationModal &&
-            applicationModal.classList.contains(
+            applicationModal.classList.add(
                 "active"
-            )
-        ) {
+            );
 
-            closeModal();
+            applicationModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.style.overflow =
+                "hidden";
 
         }
 
     }
-);
 
 
-// =========================================================
+    // =========================================================
+    // CLOSE MODAL
+    // =========================================================
+
+    function closeModal() {
+
+        if (!applicationModal) {
+            return;
+        }
+
+
+        applicationModal.classList.remove(
+            "active"
+        );
+
+
+        applicationModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        document.body.style.overflow =
+            "";
+
+
+        selectedAdmission =
+            null;
+
+    }
+
+
+    if (closeApplicationModal) {
+
+        closeApplicationModal.addEventListener(
+            "click",
+            closeModal
+        );
+
+    }
+
+
+    if (modalOverlay) {
+
+        modalOverlay.addEventListener(
+            "click",
+            closeModal
+        );
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                applicationModal &&
+                applicationModal.classList.contains(
+                    "active"
+                )
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+   // =========================================================
 // STATUS BUTTONS
 // =========================================================
 
@@ -716,7 +716,7 @@ document
 
         button.addEventListener(
             "click",
-            () => {
+            async () => {
 
                 const newStatus =
                     button.dataset.status;
@@ -732,9 +732,133 @@ document
                 }
 
 
-                alert(
-                    `Status change to "${newStatus}" will be connected to the backend next.`
-                );
+                const admissionId =
+                    selectedAdmission.id;
+
+
+                const originalText =
+                    button.textContent;
+
+
+                try {
+
+                    button.disabled = true;
+
+                    button.textContent =
+                        "Updating...";
+
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/admissions/${admissionId}/status`,
+                            {
+                                method: "PATCH",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    status: newStatus
+                                })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.detail ||
+                            "Unable to update admission status."
+                        );
+
+                    }
+
+
+                    if (data.status !== "success") {
+
+                        throw new Error(
+                            "Status update failed."
+                        );
+
+                    }
+
+
+                    // Update the local admission
+                    selectedAdmission.status =
+                        newStatus;
+
+
+                    // Update the matching admission
+                    const admissionIndex =
+                        admissions.findIndex(
+                            admission =>
+                                admission.id ===
+                                admissionId
+                        );
+
+
+                    if (admissionIndex !== -1) {
+
+                        admissions[
+                            admissionIndex
+                        ].status = newStatus;
+
+                    }
+
+
+                    // Update modal status
+                    if (modalStatus) {
+
+                        modalStatus.textContent =
+                            newStatus;
+
+                        updateModalStatusClass(
+                            newStatus
+                        );
+
+                    }
+
+
+                    // Update dashboard statistics
+                    updateStats();
+
+
+                    // Update application cards
+                    renderAdmissions();
+
+
+                    // Close modal
+                    closeModal();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Status update error:",
+                        error
+                    );
+
+
+                    alert(
+                        error.message ||
+                        "Unable to update admission status."
+                    );
+
+
+                } finally {
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        originalText;
+
+                }
 
             }
         );
@@ -742,123 +866,122 @@ document
     });
 
 
-// =========================================================
-// MODAL STATUS STYLE
-// =========================================================
+    // =========================================================
+    // MODAL STATUS STYLE
+    // =========================================================
 
-function updateModalStatusClass(status) {
+    function updateModalStatusClass(status) {
 
-    if (!modalStatus) {
-        return;
+        if (!modalStatus) {
+            return;
+        }
+
+
+        modalStatus.className =
+            "application-status";
+
+
+        if (status) {
+
+            modalStatus.classList.add(
+                `status-${String(status).toLowerCase()}`
+            );
+
+        }
+
     }
 
 
-    modalStatus.className =
-        "application-status";
+    // =========================================================
+    // REFRESH
+    // =========================================================
 
+    if (refreshButton) {
 
-    if (status) {
-
-        modalStatus.classList.add(
-            `status-${String(status).toLowerCase()}`
+        refreshButton.addEventListener(
+            "click",
+            loadAdmissions
         );
 
     }
 
-}
 
+    // =========================================================
+    // SEARCH
+    // =========================================================
 
-// =========================================================
-// REFRESH
-// =========================================================
+    if (searchInput) {
 
-if (refreshButton) {
+        searchInput.addEventListener(
+            "input",
+            renderAdmissions
+        );
 
-    refreshButton.addEventListener(
-        "click",
-        loadAdmissions
-    );
-
-}
-
-
-// =========================================================
-// SEARCH
-// =========================================================
-
-if (searchInput) {
-
-    searchInput.addEventListener(
-        "input",
-        renderAdmissions
-    );
-
-}
-
-
-// =========================================================
-// FILTER
-// =========================================================
-
-if (statusFilter) {
-
-    statusFilter.addEventListener(
-        "change",
-        renderAdmissions
-    );
-
-}
-
-
-// =========================================================
-// HELPERS
-// =========================================================
-
-function formatDate(dateString) {
-
-    if (!dateString) {
-        return "—";
     }
 
 
-    const date =
-        new Date(dateString);
+    // =========================================================
+    // FILTER
+    // =========================================================
 
+    if (statusFilter) {
 
-    if (Number.isNaN(date.getTime())) {
-        return dateString;
+        statusFilter.addEventListener(
+            "change",
+            renderAdmissions
+        );
+
     }
 
 
-    return date.toLocaleDateString(
-        undefined,
-        {
-            year: "numeric",
-            month: "short",
-            day: "numeric"
+    // =========================================================
+    // HELPERS
+    // =========================================================
+
+    function formatDate(dateString) {
+
+        if (!dateString) {
+            return "—";
         }
-    );
-
-}
 
 
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-}
+        const date =
+            new Date(dateString);
 
 
-// =========================================================
-// INITIAL LOAD
-// =========================================================
+        if (Number.isNaN(date.getTime())) {
+            return dateString;
+        }
 
-loadAdmissions();
-```
+
+        return date.toLocaleDateString(
+            undefined,
+            {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            }
+        );
+
+    }
+
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
+
+
+    // =========================================================
+    // INITIAL LOAD
+    // =========================================================
+
+    loadAdmissions();
 
 });
