@@ -155,7 +155,40 @@ def health():
         "status": "success",
         "message": "API is healthy."
     }
+# =========================================================
+# ADMIN LOGIN
+# =========================================================
 
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+@app.post("/api/login")
+def admin_login(login: LoginRequest):
+
+    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
+    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+
+    if not ADMIN_EMAIL or not ADMIN_PASSWORD:
+        raise HTTPException(
+            status_code=500,
+            detail="Admin login credentials are not configured."
+        )
+
+    if (
+        login.email != ADMIN_EMAIL
+        or login.password != ADMIN_PASSWORD
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password."
+        )
+
+    return {
+        "status": "success",
+        "message": "Login successful."
+    }
 
 # =========================================================
 # SUBMIT ADMISSION
