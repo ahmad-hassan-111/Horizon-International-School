@@ -11,9 +11,14 @@ const API_URL =
    ELEMENTS
 ========================================================= */
 
-const loginForm = document.getElementById("loginForm");
-const loginButton = document.getElementById("loginButton");
-const loginStatus = document.getElementById("loginStatus");
+const loginForm =
+    document.getElementById("loginForm");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const loginStatus =
+    document.getElementById("loginStatus");
 
 const passwordInput =
     document.getElementById("password");
@@ -52,7 +57,7 @@ if (passwordToggle && passwordInput) {
 
 
 /* =========================================================
-   STATUS
+   STATUS MESSAGE
 ========================================================= */
 
 function showStatus(message, type = "info") {
@@ -81,9 +86,9 @@ if (loginForm) {
             event.preventDefault();
 
 
-            const email =
+            const username =
                 document
-                    .getElementById("email")
+                    .getElementById("username")
                     .value
                     .trim();
 
@@ -95,10 +100,10 @@ if (loginForm) {
                VALIDATION
             ----------------------------------------- */
 
-            if (!email || !password) {
+            if (!username || !password) {
 
                 showStatus(
-                    "Please enter your email and password.",
+                    "Please enter your username and password.",
                     "error"
                 );
 
@@ -107,7 +112,7 @@ if (loginForm) {
 
 
             /* -----------------------------------------
-               LOADING
+               LOADING STATE
             ----------------------------------------- */
 
             loginButton.disabled = true;
@@ -124,7 +129,7 @@ if (loginForm) {
             try {
 
                 /* -------------------------------------
-                   API REQUEST
+                   LOGIN REQUEST
                 ------------------------------------- */
 
                 const response =
@@ -139,7 +144,7 @@ if (loginForm) {
                             },
 
                             body: JSON.stringify({
-                                email: email,
+                                username: username,
                                 password: password
                             })
                         }
@@ -151,7 +156,7 @@ if (loginForm) {
 
 
                 /* -------------------------------------
-                   FAILED
+                   LOGIN FAILED
                 ------------------------------------- */
 
                 if (!response.ok) {
@@ -159,13 +164,13 @@ if (loginForm) {
                     throw new Error(
                         data.detail ||
                         data.message ||
-                        "Invalid email or password."
+                        "Invalid username or password."
                     );
                 }
 
 
                 /* -------------------------------------
-                   SUCCESS
+                   LOGIN SUCCESS
                 ------------------------------------- */
 
                 sessionStorage.setItem(

@@ -99,6 +99,40 @@ class Admission(BaseModel):
 class StatusUpdate(BaseModel):
     status: str
 
+ # =========================================================
+# ADMIN LOGIN
+# =========================================================
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+
+@app.post("/api/login")
+def admin_login(credentials: LoginRequest):
+
+    admin_username = os.getenv("ADMIN_USERNAME")
+    admin_password = os.getenv("ADMIN_PASSWORD")
+
+    if not admin_username or not admin_password:
+        raise HTTPException(
+            status_code=500,
+            detail="Admin login credentials are not configured."
+        )
+
+    if (
+        credentials.username != admin_username
+        or credentials.password != admin_password
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid username or password."
+        )
+
+    return {
+        "status": "success",
+        "message": "Login successful."
+    }
 
 class LoginRequest(BaseModel):
     username: str
